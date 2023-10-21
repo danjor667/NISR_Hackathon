@@ -47,11 +47,12 @@ def season_a():
         for land in df.sum():
            total_land += land
 
-        #st.write(df.sum())
+        max_land = df.sum().max()
+        min_land = df.sum().min()
 
-        card_1, card_2, card_3, card_4= st.columns(4)
-        card_1.metric("Min Land Used:", value=0, delta="min land", delta_color="inverse")
-        card_2.metric("Max Land Used:", value=0, delta="max land")
+        card_1, card_2, card_3, card_4 = st.columns(4)
+        card_1.metric("Min Land Used:", value=min_land, delta="min land", delta_color="inverse")
+        card_2.metric(f"Max Land Used:", value=max_land, delta="max land")
         card_3.metric("Total Land in selected districts (in ha)", value=total_land, delta="Selected District")
         card_4.metric("Total land used Nation Wide", value=TOTAL, delta="Total")
         style_metric_cards(background_color="#6600ff")
@@ -118,11 +119,12 @@ def season_b():
         for land in df.sum():
            total_land += land
 
-        #st.write(df.sum())
+        min_land = df.sum().min()
+        max_land = df.sum().max()
 
         card_1, card_2, card_3, card_4= st.columns(4)
-        card_1.metric("Min Land Used:", value=0, delta="min land", delta_color="inverse")
-        card_2.metric("Max Land Used:", value=0, delta="max land")
+        card_1.metric(f"Min Land Used:", value=min_land, delta="min land", delta_color="inverse")
+        card_2.metric(f"Max Land Used:", value=max_land, delta="max land")
         card_3.metric("Total Land used in selected districts (in ha)", value=total_land, delta="Selected District")
         card_4.metric("Total land used Nation Wide", value=TOTAL, delta="Total")
         style_metric_cards(background_color="#6600ff")
@@ -186,11 +188,12 @@ def season_c():
         for land in df.sum():
            total_land += land
 
-        #st.write(df.sum())
+        max_land = df.sum().max()
+        min_land = df.sum().min()
 
         card_1, card_2, card_3, card_4= st.columns(4)
-        card_1.metric("Min Land Used:", value=0, delta="min land", delta_color="inverse")
-        card_2.metric("Max Land Used:", value=0, delta="max land")
+        card_1.metric(f"Min Land Used:", value=min_land, delta="min land", delta_color="inverse")
+        card_2.metric(f"Max Land Used:", value=max_land, delta="max land")
         card_3.metric("Total Land used in selected districts (in ha)", value=total_land, delta="Selected District")
         card_4.metric("Total land used Nation Wide", value=TOTAL, delta="Total")
         style_metric_cards(background_color="#6600ff")
