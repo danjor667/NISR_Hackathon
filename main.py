@@ -22,8 +22,8 @@ season_A, season_B, season_C = load()
 
 
 def season_a():
-    # processing and plotting the graph for seasons A
-    df = season_A #TODO drop "Developed land"
+    # processing and plotting the graph for seasons A data
+    df = season_A.drop("Total developed land", axis=1) #TODO drop "Developed land"
     national = df.iloc[-1]
     TOTAL = 0
     for land in national[1:]:
@@ -52,7 +52,7 @@ def season_a():
         card_1, card_2, card_3, card_4= st.columns(4)
         card_1.metric("Min Land Used:", value=0, delta="min land", delta_color="inverse")
         card_2.metric("Max Land Used:", value=0, delta="max land")
-        card_3.metric("Total Land used in selected districts (in ha)", value=total_land, delta="Selected District")
+        card_3.metric("Total Land in selected districts (in ha)", value=total_land, delta="Selected District")
         card_4.metric("Total land used Nation Wide", value=TOTAL, delta="Total")
         style_metric_cards(background_color="#6600ff")
         return total_land
@@ -94,7 +94,7 @@ def season_a():
 
 def season_b():
     # processing and plotting graph for season B data
-    df = season_B #TODO drop "Developed land"
+    df = season_B.drop("Total developed land", axis=1) #TODO drop "Developed land"
     national = df.iloc[-1]
     TOTAL = 0
     for land in national[1:]:
