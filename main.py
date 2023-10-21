@@ -23,7 +23,7 @@ season_A, season_B, season_C = load()
 
 def season_a():
     # processing and plotting the graph for seasons A
-    df = season_C #TODO drop "Developed land"
+    df = season_A #TODO drop "Developed land"
     national = df.iloc[-1]
     TOTAL = 0
     for land in national[1:]:
@@ -94,7 +94,7 @@ def season_a():
 
 def season_b():
     # processing and plotting graph for season B data
-    df = season_C #TODO drop "Developed land"
+    df = season_B #TODO drop "Developed land"
     national = df.iloc[-1]
     TOTAL = 0
     for land in national[1:]:
