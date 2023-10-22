@@ -20,29 +20,11 @@ def load():
 season_A, season_B, season_C = load()
 
 
-def processing(df):
+@st.cache_data
+def processing(df, name, TOTAL):
     # processing and plotting graph for season B data
-    try:
-        df = df.drop("Total developed land", axis=1)
-    except: #column not found error
-        df = df.drop("Developed land", axis=1)
-    national = df.iloc[-1]
-    TOTAL = 0
-    for land in national[1:]:
-        TOTAL += land
-    df = df.drop(32)
-    df.set_index("District", inplace=True)
-    st.write("new season")
-    with st.sidebar:
-        st.subheader("Filter")
-        districts = st.multiselect("District", df.index)
-        crops = st.multiselect("Crops", df.columns)
-    if districts and crops:
-        # create dataframe with the selected crops and Districts
-        df = df.loc[districts, crops]
-    else:
-        # define default district and crops to plot as the whole df can't be visualised at once on the graph
-        df = df.loc[[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]], [df.columns[0], df.columns[5], df.columns[3]]]
+    st.write(name)
+
 
     def cards(TOTAL):
         total_land = 0
@@ -98,15 +80,71 @@ with st.sidebar:
                          ["Season A", "Season B", "Season C"],
                          menu_icon="house")
 
+
 if season == "Season A":
-    # call function for season A
-    processing(season_A)
+    df = season_A
+    name = "Season A"
+    national = df.iloc[-1]
+    TOTAL = 0
+    for land in national[1:]:
+        TOTAL += land
+    df = df.drop(32)
+    df.set_index("District", inplace=True)
+    with st.sidebar:
+        st.subheader("Filter")
+        districts = st.multiselect("District", df.index, default=[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]])
+        crops = st.multiselect("Crops", df.columns, default=[df.columns[0], df.columns[1], df.columns[2]])
+    if districts and crops:
+        # create dataframe with the selected crops and Districts
+        df = df.loc[districts, crops]
+    #else:
+    #    # define default district and crops to plot as the whole df can't be visualised at once on the graph
+    #    df = df.loc[[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]], [df.columns[0], df.columns[5],
+    #                                                                                    df.columns[3]]]
+    processing(df, name, TOTAL)
 elif season == "Season B":
-    # call function for season b
-    processing(season_B)
+    df = season_B
+    name = "Season B"
+    national = df.iloc[-1]
+    TOTAL = 0
+    for land in national[1:]:
+        TOTAL += land
+    df = df.drop(32)
+    df.set_index("District", inplace=True)
+    with st.sidebar:
+        st.subheader("Filter")
+        districts = st.multiselect("District", df.index, default=[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]])
+        crops = st.multiselect("Crops", df.columns, default=[df.columns[0], df.columns[1], df.columns[2]])
+    if districts and crops:
+        # create dataframe with the selected crops and Districts
+        df = df.loc[districts, crops]
+    else:
+        # define default district and crops to plot as the whole df can't be visualised at once on the graph
+        df = df.loc[[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]], [df.columns[0], df.columns[5],
+                                                                                        df.columns[3]]]
+    processing(df, name, TOTAL)
+
 else:
-    # call function for season C
-    processing(season_C)
+    df = season_C
+    name = "Season C"
+    national = df.iloc[-1]
+    TOTAL = 0
+    for land in national[1:]:
+        TOTAL += land
+    df = df.drop(32)
+    df.set_index("District", inplace=True)
+    with st.sidebar:
+        st.subheader("Filter")
+        districts = st.multiselect("District", df.index, default=[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]])
+        crops = st.multiselect("Crops", df.columns, default=[df.columns[0], df.columns[1], df.columns[2]])
+    if districts and crops:
+        # create dataframe with the selected crops and Districts
+        df = df.loc[districts, crops]
+    else:
+        # define default district and crops to plot as the whole df can't be visualised at once on the graph
+        df = df.loc[[df.index[0], df.index[1], df.index[2], df.index[3], df.index[4]], [df.columns[0], df.columns[5],
+                                                                                        df.columns[3]]]
+    processing(df, name, TOTAL)
 
 
 hide_default_style = """
