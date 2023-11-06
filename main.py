@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 from streamlit_extras.metric_cards import style_metric_cards
@@ -33,10 +33,10 @@ def processing(dataframe, season_name, nation_land):
         max_land = dataframe.sum().max()
 
         card_1, card_2, card_3, card_4 = st.columns(4)
-        card_1.metric(f"Min Land Used:", value=min_land, delta="min land", delta_color="inverse")
-        card_2.metric(f"Max Land Used:", value=max_land, delta="max land")
-        card_3.metric("Total Land used in selected districts (in ha)", value=total_area, delta="Selected District")
-        card_4.metric("Total land used Nation Wide", value=national_land, delta="Total")
+        card_1.metric(f"Min Land Used:", value=f"{min_land:,.2f}", delta="min land", delta_color="inverse")
+        card_2.metric(f"Max Land Used:", value=f"{max_land:,.2f}", delta="max land")
+        card_3.metric("Total Land used in selected districts (in ha)", value=f"{total_area:,.2f}", delta="Selected District")
+        card_4.metric("Total land used Nation Wide", value=f"{national_land:,.1f}", delta="Total")
         style_metric_cards(background_color="#6600ff")
         return total_area
 
@@ -44,8 +44,9 @@ def processing(dataframe, season_name, nation_land):
         total_land = cards(nation_land)
         div_1, div_2 = st.columns([0.45, 0.55], gap="small")
         with div_1:
-            description_df = dataframe.sum()
-            description_df.columns = ["crop", "total land used"]
+            description_serie = dataframe.sum()
+            description_df = pd.DataFrame(description_serie)
+            description_df.columns = ["total land used"]
             st.dataframe(description_df, use_container_width=True)
             st.write("Table Description")
         with div_2:
