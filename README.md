@@ -6,12 +6,12 @@ file location-- data/2022_Tables.xlsx
 
 ## installation
 ```sh
-git clone repo_name
+git clone https://github.com/danjor667/NISR_Hackathon.git 
 ```
-or download the zip file
+or download the zip and extract it
 then 
 ```sh
-cd repo_name
+cd NISR_Hackathon
 ```
 create a virtual enviroment and install the requirements
 ```sh
