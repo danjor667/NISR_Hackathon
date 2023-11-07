@@ -2,10 +2,11 @@
 this is a dashboard built with streamlit and plotly-express to visualize the amount of land used by crop
 for the 2022 agricultural season in Rwanda
 The dashboard uses the data in SAS 2022_Tables.xlsx excel file renamed to 2022_Tables.xlsx
-### file location  
+###### file location  
 data/2022_Tables.xlsx
+
 <div>
-<img src="data/" width=250px height=140px>
+<img src="data/Screenshot 2023-11-07 at 10.46.58 AM (1).png" width=250px height=180px>
 
 ## installation
 ```sh
