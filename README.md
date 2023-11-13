@@ -1,7 +1,9 @@
 # NISR_Hackathon
 this is a dashboard built with streamlit and plotly-express to visualize the amount of land used by crop
 for the 2022 agricultural season in Rwanda
-The dashboard uses the data in SAS 2022_Tables.xlsx excel file renamed to 2022_Tables.xlsx
+The dashboard uses the data in SAS 2022_Tables.xlsx excel file renamed to 2022_Tables.xlsx.
+The dashboard is hosted using streamlite share
+[live demo](https://nisrhackathon-vxycfktqwu2jcpfxhxhruq.streamlit.app/)
 ###### file location  
 data/2022_Tables.xlsx
 
