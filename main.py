@@ -7,8 +7,8 @@ from data.loading import *
 import plotly_express as px
 
 
-st.set_page_config("Agricultural land usage", layout="wide")
-st.subheader("2022 Agricultural season land usage in Rwanda")
+st.set_page_config("2022 Agricultural Season", layout="wide")
+st.title("Insight Of The 2022 Agricultural Season In Rwanda")
 st.divider()
 
 
@@ -36,17 +36,15 @@ land_a_df, land_b_df, land_c_df = load_land()
 production_a_df, production_b_df, production_c_df = load_production()
 yield_a_df, yield_b_df, yield_c_df = load_yield()
 harvested_a, harvested_b, harvested_c = load_harvested()
-#a = harvested_a.columns.to_list()[24]
-#st.write(a)
-#st.write(len(a))
-#st.write(1)
-#st.write(harvested_b.columns.to_list())
-#st.write(harvested_c.columns.to_list())
 
 
 @st.cache_data
 def processing(land_df, production_df, yield_df, season_name):
-    st.write(season_name)
+    #st.write(season_name)
+    with st.container():
+        part1, part2, part3 = st.columns(3)
+    with part2:
+        st.subheader(season_name)
 
     def cards():
         max_land = land_df.max().max()
@@ -60,22 +58,19 @@ def processing(land_df, production_df, yield_df, season_name):
         max_yield = yield_df.max().max()
         max_yield_district = yield_df[yield_df == max_yield].stack().index[0][1]
         max_yield_crop = yield_df[yield_df == yield_df.max().max()].stack().index[0][0]
-        #st.write(max_land_crop)
-        card_1, card_2, card_3, card_4 = st.columns(4)
+
+        card_1, card_2, card_3 = st.columns(3)
         card_1.metric("Top Land Usage (Hectars):", value=f"{max_land:,.2f}",
                       delta=f"{max_land_district}  {max_land_crop.upper()}")
         card_2.metric("Top Production (in MT)", value=f"{max_production:,.2f}",
                       delta=f"{max_pro_district}  {max_pro_crop.upper()}")
         card_3.metric("Top Average Yield (in kg/Ha)", value=f"{max_yield:,.2f}",
                       delta=f"{max_yield_district}  {max_yield_crop.upper()}")
-        card_4.metric("Total land used Nation Wide", value=0, delta="Total")
+        #card_4.metric("Total land used Nation Wide", value=0, delta="Total")
         style_metric_cards(background_color="#696865")
 
 
     cards()
-    st.write("")
-    st.write("")
-    st.write("")
     # plotting barchart and pie chart representation of data
     land_fig = px.bar(land_df, barmode="group", y=land_df.columns.to_list(), x=land_df.index.to_list(),
                      title="land used vs crop grown by Districts")
@@ -83,7 +78,7 @@ def processing(land_df, production_df, yield_df, season_name):
     land_fig.update_layout(yaxis=dict(dtick=250), height=600)
     # processing and plotting the graph for the creop production
     production_fig = px.bar(production_df, barmode="group", y=production_df.columns.to_list(),
-                            x=production_df.index.to_list(), title="various crop production by district")
+                            x=production_df.index.to_list(), title="various crop production by district in (MT)")
     # processing and plotting the garph for the the yield
 
     yield_fig = px.bar(yield_df, barmode="group", y=yield_df.columns.to_list(), x=yield_df.index.to_list(),
@@ -171,12 +166,10 @@ elif season == "Season B":
         with col1:
             option = st.selectbox("chose a district", land.index.to_list())
         with col3:
-            district = st.multiselect("select crop", land.columns.to_list(), default=[land.columns[0], land.columns[1],
-                                                                                      land.columns[2]])
-        ###########
+            district = st.multiselect("select crops", land.columns.to_list(), default=[land.columns[0], land.columns[1],
+                                                                                      land.columns[6]])
         harvest = harvested_b
         harvest.set_index("District", inplace=True)
-        #############
         row1 = land.loc[f"{option}"].rename(index="cultivated land")
         row1 = row1[0:23]
         row2 = harvest.loc[f"{option}"].rename(index="harvested land")
@@ -185,17 +178,18 @@ elif season == "Season B":
         row1 = pd.DataFrame(row1)
         row2.index = row1.index.to_list()
         new_df = pd.concat([row1, row2], axis=1)
-        st.write("")
-        st.write("")
-        st.write("")
         with col2:
-            st.write(f"                       {option}")
-            st.caption("testing caption")
-            fig_1 = px.bar(new_df, x=new_df.index, y=["cultivated land", "harvested land"])
+            if district and option:
+                new_df = new_df.loc[district]
+            fig_1 = px.bar(new_df, x=new_df.index, y=["cultivated land", "harvested land"], title=f"cultivated land "
+                                                                                                  f"vs harvested land"
+                                                                                                  f" for various crop "
+                                                                                                  f"in the {option} "
+                                                                                                  f"district")
+            fig_1.update_layout(yaxis=dict(dtick=200), height=600)
+            fig_1.update_layout(xaxis_title="Crops", yaxis_title="land in (Ha)")
             st.plotly_chart(fig_1, use_container_width=True)
         with st.container():
-            if district and option:
-                new_df = new_df.loc[district, option]
             st.dataframe(new_df, use_container_width=True)
 
 
