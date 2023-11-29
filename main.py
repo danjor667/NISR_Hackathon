@@ -40,11 +40,11 @@ harvested_a, harvested_b, harvested_c = load_harvested()
 
 
 @st.cache_data
-def processing(land_df, production_df, yield_df, season_name):
-    with st.container():
-        part1, part2, part3 = st.columns(3)
-    with part2:
-        st.subheader(season_name)
+def processing(land_df, production_df, yield_df):
+    #with st.container():
+     #   part1, part2, part3 = st.columns(3)
+    #with part2:
+     #   st.subheader(season_name)
 
     def cards():
         max_land = land_df.max().max()
@@ -116,23 +116,29 @@ if season == "Season A":
     production_df.drop(32)
     production_df.drop(33)
     yield_df = yield_a_df
-    name = "Season A"
+    with st.container():
+        c1, c2, c3 = st.columns(3)
+        with c2:
+            st.header("Season A")
     land_df = land_df.drop(32)
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-    with st.sidebar:
-        st.subheader("Filter")
-        districts = st.multiselect("District", land_df.index, default=[land_df.index[0], land_df.index[1], land_df.index[2],
-                                                                       land_df.index[3], land_df.index[4]])
-        crops = st.multiselect("Crops", land_df.columns, default=[land_df.columns[0], land_df.columns[1],
-                                                                  land_df.columns[2]])
+    st.subheader("Filter")
+    with st.container():
+        ct1, ct2, ct3 = st.columns(3)
+        with ct1:
+            districts = st.multiselect("District", land_df.index, default=[land_df.index[0], land_df.index[1], land_df.index[2],
+                                                                   land_df.index[3], land_df.index[4]])
+        with ct3:
+            crops = st.multiselect("Crops", land_df.columns, default=[land_df.columns[0], land_df.columns[1],
+                                                              land_df.columns[2]])
     if districts and crops:
         # create dataframe with the selected crops and Districts
         land_df = land_df.loc[districts, crops]
         production_df = production_df.loc[districts, crops]
         yield_df = yield_df.loc[districts, crops]
-    processing(land_df, production_df, yield_df, name)
+    processing(land_df, production_df, yield_df)
     with st.container():
         col1, col2, col3 = st.columns([0.13, 0.74, 0.13])
         land = land_a_df
@@ -172,24 +178,30 @@ elif season == "Season B":
     production_df.drop(32)
     production_df.drop(33)
     yield_df = yield_b_df
-    name = "Season B"
+    with st.container():
+        c1, c2, c3 = st.columns(3)
+        with c2:
+            st.header("Season B")
     land_df = land_df.drop(32)
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-    with st.sidebar:
-        st.subheader("Filter")
-        districts = st.multiselect("District", land_df.index,
-                                   default=[land_df.index[0], land_df.index[1], land_df.index[2],
-                                            land_df.index[3], land_df.index[4]])
-        crops = st.multiselect("Crops", land_df.columns,
-                               default=[land_df.columns[0], land_df.columns[1], land_df.columns[2]])
+    st.subheader("Filter")
+    with st.container():
+        ct1, ct2, ct3 = st.columns(3)
+        with ct1:
+            districts = st.multiselect("District", land_df.index,
+                                       default=[land_df.index[0], land_df.index[1], land_df.index[2],
+                                                land_df.index[3], land_df.index[4]])
+        with ct3:
+            crops = st.multiselect("Crops", land_df.columns, default=[land_df.columns[0], land_df.columns[1],
+                                                                      land_df.columns[2]])
     if districts and crops:
         # create dataframe with the selected crops and Districts
         land_df = land_df.loc[districts, crops]
         production_df = production_df.loc[districts, crops]
         yield_df = yield_df.loc[districts, crops]
-    processing(land_df, production_df, yield_df, name)
+    processing(land_df, production_df, yield_df)
     with st.container():
         col1, col2, col3 = st.columns([0.13, 0.74, 0.13])
         land = land_b_df
@@ -231,26 +243,32 @@ else:
     production_df.drop(32)
     production_df.drop(33)
     yield_df = yield_c_df
-    name = "Season C"
+    with st.container():
+        c1, c2, c3 = st.columns(3)
+        with c2:
+            st.header("Season C")
     land_df = land_df.drop(32)
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-    with st.sidebar:
-        st.subheader("Filter")
-        districts = st.multiselect("District", land_df.index,
-                                   default=[land_df.index[0], land_df.index[1], land_df.index[5],
-                                            land_df.index[3], land_df.index[4]])
-        crops = st.multiselect("Crops", land_df.columns,
-                               default=[land_df.columns[0], land_df.columns[1], land_df.columns[3]])
+    st.subheader("Filter")
+    with st.container():
+        ct1, ct2, ct3 = st.columns(3)
+        with ct1:
+            districts = st.multiselect("District", land_df.index,
+                                       default=[land_df.index[0], land_df.index[1], land_df.index[2],
+                                                land_df.index[3], land_df.index[4]])
+        with ct3:
+            crops = st.multiselect("Crops", land_df.columns, default=[land_df.columns[0], land_df.columns[1],
+                                                                      land_df.columns[2]])
     if districts and crops:
         # create dataframe with the selected crops and Districts
         land_df = land_df.loc[districts, crops]
         production_df = production_df.loc[districts, crops]
         yield_df = yield_df.loc[districts, crops]
-    processing(land_df, production_df, yield_df, name)
+    processing(land_df, production_df, yield_df)
     with st.container():
-        col1, col2, col3 = st.columns([0.13, 0.74, 0.13])
+        col1, col2, col3 = st.columns([0.15, 0.70, 0.15])
         land = land_c_df
         land = land.drop(32)
         land.set_index("District", inplace=True)
