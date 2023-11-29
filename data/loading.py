@@ -120,7 +120,7 @@ def load_crop_yield_a():
 
 
 def load_crop_yield_b():
-    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 18 ")  # trailing spaceat the end of the sheet name
+    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 18 ")  # trailing space at the end of the sheet name
     df = df.drop("List of Tables", axis=1)
     df = df.drop(0)
     df = df.drop(1)
@@ -146,8 +146,6 @@ def load_crop_yield_c():
 def load_harvested_a():
     df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 14")
     df = df.drop("List of Tables", axis=1)
-    dev = df.columns.to_list()[24]
-    df = df.drop(dev, axis=1)
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]
@@ -157,10 +155,8 @@ def load_harvested_a():
 
 
 def load_harvested_b():
-    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 15 ") #trailing white space
+    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 15 ")  # trailing white space
     df = df.drop("List of Tables", axis=1)
-    dev = df.columns.to_list()[24]
-    df = df.drop(dev, axis=1)
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]
@@ -172,10 +168,10 @@ def load_harvested_b():
 def load_harvested_c():
     df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 16")
     df = df.drop("List of Tables", axis=1)
-    #df = df.drop("Developed land", axis=1)
+    df = df.dropna(axis=1, how="all")
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]
     df = df.fillna(0)
-    df.rename(columns={"District/Crop category": "District"}, inplace=True)
+    df.rename(columns={"District/Crop": "District"}, inplace=True)
     return df
