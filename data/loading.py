@@ -146,6 +146,8 @@ def load_crop_yield_c():
 def load_harvested_a():
     df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 14")
     df = df.drop("List of Tables", axis=1)
+    dev = df.columns.to_list()[24]
+    df = df.drop(dev, axis=1)
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]
@@ -156,8 +158,9 @@ def load_harvested_a():
 
 def load_harvested_b():
     df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 15 ") #trailing white space
-    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 14")
     df = df.drop("List of Tables", axis=1)
+    dev = df.columns.to_list()[24]
+    df = df.drop(dev, axis=1)
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]
@@ -168,8 +171,8 @@ def load_harvested_b():
 
 def load_harvested_c():
     df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 16")
-    df = pd.read_excel("data/2022_Tables.xlsx", sheet_name="Table 14")
     df = df.drop("List of Tables", axis=1)
+    #df = df.drop("Developed land", axis=1)
     df = df.drop(0)
     df.columns = df.iloc[0]
     df = df[1:32]

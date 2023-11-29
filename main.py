@@ -7,7 +7,7 @@ from data.loading import *
 import plotly_express as px
 
 
-st.set_page_config("Agricultural land usage", layout="centered")
+st.set_page_config("Agricultural land usage", layout="wide")
 st.subheader("2022 Agricultural season land usage in Rwanda")
 st.divider()
 
@@ -27,10 +27,21 @@ def load_yield():
     return load_crop_yield_a(), load_crop_yield_b(), load_crop_yield_c()
 
 
+@st.cache_data
+def load_harvested():
+    return load_harvested_a(), load_harvested_b(), load_harvested_c()
+
+
 land_a_df, land_b_df, land_c_df = load_land()
 production_a_df, production_b_df, production_c_df = load_production()
 yield_a_df, yield_b_df, yield_c_df = load_yield()
-
+harvested_a, harvested_b, harvested_c = load_harvested()
+#a = harvested_a.columns.to_list()[24]
+#st.write(a)
+#st.write(len(a))
+#st.write(1)
+#st.write(harvested_b.columns.to_list())
+#st.write(harvested_c.columns.to_list())
 
 
 @st.cache_data
@@ -61,7 +72,6 @@ def processing(land_df, production_df, yield_df, season_name):
         style_metric_cards(background_color="#696865")
 
 
-    # with st.container():
     cards()
     st.write("")
     st.write("")
@@ -74,7 +84,7 @@ def processing(land_df, production_df, yield_df, season_name):
     # processing and plotting the graph for the creop production
     production_fig = px.bar(production_df, barmode="group", y=production_df.columns.to_list(),
                             x=production_df.index.to_list(), title="various crop production by district")
-    # processing and plotting the garphfor the the yield
+    # processing and plotting the garph for the the yield
 
     yield_fig = px.bar(yield_df, barmode="group", y=yield_df.columns.to_list(), x=yield_df.index.to_list(),
                       title="Average crop yield by district(kg/Ha)")
@@ -98,6 +108,7 @@ def processing(land_df, production_df, yield_df, season_name):
         st.plotly_chart(yield_fig, use_container_width=True)
 
     st.divider()
+
 
 
 with st.sidebar:
@@ -152,6 +163,41 @@ elif season == "Season B":
         production_df = production_df.loc[districts, crops]
         yield_df = yield_df.loc[districts, crops]
     processing(land_df, production_df, yield_df, name)
+    with st.container():
+        col1, col2, col3 = st.columns([0.13, 0.74, 0.13])
+        land = land_b_df
+        land = land.drop(32)
+        land.set_index("District", inplace=True)
+        with col1:
+            option = st.selectbox("chose a district", land.index.to_list())
+        with col3:
+            district = st.multiselect("select crop", land.columns.to_list(), default=[land.columns[0], land.columns[1],
+                                                                                      land.columns[2]])
+        ###########
+        harvest = harvested_b
+        harvest.set_index("District", inplace=True)
+        #############
+        row1 = land.loc[f"{option}"].rename(index="cultivated land")
+        row1 = row1[0:23]
+        row2 = harvest.loc[f"{option}"].rename(index="harvested land")
+        row2 = row2[0:23]
+        row2 = pd.DataFrame(row2)
+        row1 = pd.DataFrame(row1)
+        row2.index = row1.index.to_list()
+        new_df = pd.concat([row1, row2], axis=1)
+        st.write("")
+        st.write("")
+        st.write("")
+        with col2:
+            st.write(f"                       {option}")
+            st.caption("testing caption")
+            fig_1 = px.bar(new_df, x=new_df.index, y=["cultivated land", "harvested land"])
+            st.plotly_chart(fig_1, use_container_width=True)
+        with st.container():
+            if district and option:
+                new_df = new_df.loc[district, option]
+            st.dataframe(new_df, use_container_width=True)
+
 
 else:
     land_df = land_c_df
@@ -177,6 +223,11 @@ else:
         production_df = production_df.loc[districts, crops]
         yield_df = yield_df.loc[districts, crops]
     processing(land_df, production_df, yield_df, name)
+
+
+
+
+
 
 hide_default_style = """
                 <style>
