@@ -3,7 +3,7 @@ this is a dashboard built with streamlit and plotly-express to visualize the amo
 for the 2022 agricultural season in Rwanda
 The dashboard uses the data in SAS 2022_Tables.xlsx excel file renamed to 2022_Tables.xlsx.
 The dashboard is hosted using streamlite share
-[live demo](https://nisrhackathon-vxycfktqwu2jcpfxhxhruq.streamlit.app/)
+[live demo](https://nisrhackathon-8k2cjarjc6dj8uz2dv96wy.streamlit.app/)
 ###### file location  
 data/2022_Tables.xlsx
 
