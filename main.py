@@ -129,7 +129,6 @@ def processing(land_df, production_df, yield_df):  # function to process the dat
         with st.expander("see Table"):
             st.dataframe(land_df, use_container_width=True)
         st.plotly_chart(land_fig, use_container_width=True)
-        st.caption("                    testing caption")
     with tab2:
         with st.expander("see Table"):
             st.dataframe(production_df, use_container_width=True)
@@ -140,6 +139,9 @@ def processing(land_df, production_df, yield_df):  # function to process the dat
         st.plotly_chart(yield_fig, use_container_width=True)
 
     st.divider()
+    st.header("Comparing the amount of land used to cultivate a crop against the actual amount of land on which the "
+              "crop was"
+              "harvested")
 
 # sidebar: selecting the season data to display
 
@@ -164,8 +166,8 @@ if season == "Season A":
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-
-    st.subheader("Filter")
+    st.header("land usage, crop production and average yield of crops in various districts")
+    st.write("Filter")
     with st.container():
         ct1, ct2, ct3 = st.columns(3)
         with ct1:
@@ -240,8 +242,8 @@ elif season == "Season B":
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-
-    st.subheader("Filter")
+    st.header("land usage, crop production and average yield of crops in various districts")
+    st.write("Filter")
     with st.container():
         ct1, ct2, ct3 = st.columns(3)
         with ct1:
@@ -315,8 +317,8 @@ else:
     land_df.set_index("District", inplace=True)
     production_df.set_index("District", inplace=True)
     yield_df.set_index("District", inplace=True)
-
-    st.subheader("Filter")
+    st.header("land usage, crop production and average yield of crops in various districts")
+    st.write("Filter")
     with st.container():
         ct1, ct2, ct3 = st.columns(3)
         with ct1:
