@@ -11,6 +11,7 @@ import plotly_express as px
 st.set_page_config("2022 Agricultural Season", layout="wide")
 st.title("Insight Of The 2022 Agricultural Season In Rwanda")
 st.divider()
+st.caption("use the sidebar to change the season")
 
 
 @st.cache_data
@@ -176,7 +177,7 @@ if season == "Season A":
 
     # assigning all the districts to the district variable if user clear the multiselect box
     if not districts:
-        districts = land_df.index
+        districts = land_df.index.to_list()[0:]
 
     # assigning all the districts to the district variable if user clear the multiselect box
     if not crops:
@@ -253,8 +254,7 @@ elif season == "Season B":
 
     # assigning all the districts to the district variable if user clear the multiselect box
     if not districts:
-        districts = land_df.index
-
+        districts = land_df.index.to_list()[0:]
     # assigning all the districts to the district variable if user clear the multiselect box
     if not crops:
         crops = land_df.columns
@@ -329,13 +329,14 @@ else:
 
     # assigning all the districts to the district variable if user clear the multiselect box
     if not districts:
-        districts = land_df.index
+        districts = land_df.index.to_list()[0:]
+        print(districts)
 
     # assigning all the districts to the district variable if user clear the multiselect box
     if not crops:
         crops = land_df.columns
 
-    if districts or crops:
+    if crops or districts:
         # create dataframe with the selected crops and Districts
         land_df = land_df.loc[districts, crops]
         production_df = production_df.loc[districts, crops]
